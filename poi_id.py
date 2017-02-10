@@ -53,6 +53,7 @@ clf = clf.fit(features_train, labels_train)
 pred = clf.predict(features_test)
 
 ## Compute accuracy score of classifier
+## Result: Naive Bayes = 0.88
 ## Comment: Accuracy score is not a good evaluation method for this dataset
 ##          because the majority of employees are non-POI (77 out of 95).
 ##          Hence, guessing that someone is a non-POI will give a high accuracy.
@@ -66,6 +67,10 @@ from sklearn.metrics import confusion_matrix
 print confusion_matrix(labels_test, pred)
 
 ## Generate classification report
+## Classifier 1: Naive Bayes
+## Result: Precision-recall of POI = 0.5, 0.4
+## Comment: Low precision and recall. Naive Bayes has a strong assumption
+##          that all features are independent of each other.
 from sklearn.metrics import classification_report
 print classification_report(labels_test, pred)
 
