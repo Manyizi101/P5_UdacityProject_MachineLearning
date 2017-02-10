@@ -46,9 +46,15 @@ from sklearn.cross_validation import train_test_split
 features_train, features_test, labels_train, labels_test = \
     train_test_split(features, labels, test_size=0.3, random_state=42)
 
-# Classifier 1: Naive Bayes
-from sklearn.naive_bayes import GaussianNB
-clf = GaussianNB()
+## Classifier 1: Naive Bayes
+# from sklearn.naive_bayes import GaussianNB
+# clf = GaussianNB()
+# clf = clf.fit(features_train, labels_train)
+# pred = clf.predict(features_test)
+
+## Classifier 2: Support Vector Machine
+from sklearn.svm import SVC
+clf = SVC()
 clf = clf.fit(features_train, labels_train)
 pred = clf.predict(features_test)
 
