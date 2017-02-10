@@ -61,7 +61,13 @@ pred = clf.predict(features_test)
 # acc = accuracy_score(pred, labels_test)
 # print "Classifier 1 (Naive Bayes) Accuracy: ", acc
 
+## Generate confusion matrix
+from sklearn.metrics import confusion_matrix
+print confusion_matrix(labels_test, pred)
 
+## Generate classification report
+from sklearn.metrics import classification_report
+print classification_report(labels_test, pred)
 
 ### Task 5: Tune your classifier to achieve better than .3 precision and recall
 ### using our testing script. Check the tester.py script in the final project
