@@ -52,9 +52,9 @@ features_train, features_test, labels_train, labels_test = \
 # clf = clf.fit(features_train, labels_train)
 # pred = clf.predict(features_test)
 
-## Classifier 2: Support Vector Machine
+## Classifier 2: Support Vector Machine (assume balanced data)
 from sklearn.svm import SVC
-clf = SVC()
+clf = SVC(C = 1000, kernel = 'sigmoid', gamma = 0.1)
 clf = clf.fit(features_train, labels_train)
 pred = clf.predict(features_test)
 
@@ -77,6 +77,16 @@ print confusion_matrix(labels_test, pred)
 ## Result: Precision-recall of POI = 0.5, 0.4
 ## Comment: Low precision and recall. Naive Bayes has a strong assumption
 ##          that all features are independent of each other.
+
+## Classifier 2: Support Vector Machine (assume balanced data)
+## Result: Precision-recall of POI = 0, 0
+## Comment: Very low precision and recall. Data is highly unbalanced
+##          - there are a lot more non-POIs than POIs. Hyperplane from SVM
+##          relies much on non-POI points, resulting in inaccurate separation
+## Follow-up: Perhaps SVM would perform better if we treat the data imbalance
+## http://stackoverflow.com/questions/18078084/how-should-i-teach-machine-learning-algorithm-using-data-with-big-disproportion
+## https://discussions.udacity.com/t/question-about-feature-selection-and-classifier-performance/166278/2
+
 from sklearn.metrics import classification_report
 print classification_report(labels_test, pred)
 
