@@ -52,14 +52,14 @@ clf = GaussianNB()
 clf = clf.fit(features_train, labels_train)
 pred = clf.predict(features_test)
 
-# Compute accuracy score of classifier
-# Comment: Accuracy score is not a good evaluation method for this dataset
-#          because the majority of employees are non-POI (77 out of 95).
-#          Hence, guessing that someone is a non-POI will give a high accuracy.
-#          A better evaluation method is probably precision-recall score.
-from sklearn.metrics import accuracy_score
-acc = accuracy_score(pred, labels_test)
-print "Classifier 1 (Naive Bayes) Accuracy: ", acc
+## Compute accuracy score of classifier
+## Comment: Accuracy score is not a good evaluation method for this dataset
+##          because the majority of employees are non-POI (77 out of 95).
+##          Hence, guessing that someone is a non-POI will give a high accuracy.
+##          A better evaluation method is probably precision-recall score.
+# from sklearn.metrics import accuracy_score
+# acc = accuracy_score(pred, labels_test)
+# print "Classifier 1 (Naive Bayes) Accuracy: ", acc
 
 
 
