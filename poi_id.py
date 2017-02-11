@@ -65,9 +65,17 @@ features_train, features_test, labels_train, labels_test = \
 # pred = clf.predict(features_test)
 
 ## Classifier 4: K-Nearest Neighbours
-from sklearn import neighbors
-clf = neighbors.KNeighborsClassifier(n_neighbors = 3, weights = 'distance')
-clf.fit(features_train, labels_train)
+# from sklearn import neighbors
+# clf = neighbors.KNeighborsClassifier(n_neighbors = 3, weights = 'distance')
+# clf.fit(features_train, labels_train)
+# pred = clf.predict(features_test)
+
+## Classifier 5: AdaBoost
+from sklearn.ensemble import AdaBoostClassifier
+from sklearn.tree import DecisionTreeClassifier
+clf = AdaBoostClassifier(DecisionTreeClassifier(min_samples_split=10), \
+                            n_estimators = 200, random_state=42)
+clf = clf.fit(features_train, labels_train)
 pred = clf.predict(features_test)
 
 ## Compute accuracy score of classifier
