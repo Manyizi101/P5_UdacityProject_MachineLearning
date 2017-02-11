@@ -95,6 +95,13 @@ print confusion_matrix(labels_test, pred)
 ## http://stackoverflow.com/questions/18078084/how-should-i-teach-machine-learning-algorithm-using-data-with-big-disproportion
 ## https://discussions.udacity.com/t/question-about-feature-selection-and-classifier-performance/166278/2
 
+## Classifier 3: Decision Tree (assume balanced data, min_samples_split = 15)
+## Result: Precision-recall of POI = 0.33, 0.4
+## Comment: Low precision and recall. Better results with higher min_samples_split
+##          because tree doesn't overfit training set. However, data is highly
+##          unbalanced, resulting in a biased tree.
+## Follow-up: Need to balance dataset before running decision tree.
+
 from sklearn.metrics import classification_report
 print classification_report(labels_test, pred)
 
