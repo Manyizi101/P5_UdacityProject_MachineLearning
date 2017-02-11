@@ -59,8 +59,8 @@ features_train, features_test, labels_train, labels_test = \
 # pred = clf.predict(features_test)
 
 ## Classifier 3: Decision Tree
-from sklearn.tree import DecisionTreeClassifier
-clf = DecisionTreeClassifier()
+from sklearn import tree
+clf = tree.DecisionTreeClassifier(min_samples_split = 15)
 clf = clf.fit(features_train, labels_train)
 pred = clf.predict(features_test)
 
