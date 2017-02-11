@@ -53,8 +53,14 @@ features_train, features_test, labels_train, labels_test = \
 # pred = clf.predict(features_test)
 
 ## Classifier 2: Support Vector Machine (assume balanced data)
-from sklearn.svm import SVC
-clf = SVC(C = 1000, kernel = 'sigmoid', gamma = 0.1)
+# from sklearn.svm import SVC
+# clf = SVC(C = 1000, kernel = 'sigmoid', gamma = 0.1)
+# clf = clf.fit(features_train, labels_train)
+# pred = clf.predict(features_test)
+
+## Classifier 3: Decision Tree
+from sklearn.tree import DecisionTreeClassifier
+clf = DecisionTreeClassifier()
 clf = clf.fit(features_train, labels_train)
 pred = clf.predict(features_test)
 
