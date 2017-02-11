@@ -59,9 +59,15 @@ features_train, features_test, labels_train, labels_test = \
 # pred = clf.predict(features_test)
 
 ## Classifier 3: Decision Tree
-from sklearn import tree
-clf = tree.DecisionTreeClassifier(min_samples_split = 15)
-clf = clf.fit(features_train, labels_train)
+# from sklearn import tree
+# clf = tree.DecisionTreeClassifier(min_samples_split = 15)
+# clf = clf.fit(features_train, labels_train)
+# pred = clf.predict(features_test)
+
+## Classifier 4: K-Nearest Neighbours
+from sklearn import neighbors
+clf = neighbors.KNeighborsClassifier(n_neighbors = 3, weights = 'distance')
+clf.fit(features_train, labels_train)
 pred = clf.predict(features_test)
 
 ## Compute accuracy score of classifier
