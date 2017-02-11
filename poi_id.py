@@ -77,6 +77,8 @@ print confusion_matrix(labels_test, pred)
 ## Result: Precision-recall of POI = 0.5, 0.4
 ## Comment: Low precision and recall. Naive Bayes has a strong assumption
 ##          that all features are independent of each other.
+## Follow-up: Conduct PCA before running Naive Bayes to ensure features are
+##            independent of each other
 
 ## Classifier 2: Support Vector Machine (assume balanced data)
 ## Result: Precision-recall of POI = 0, 0
