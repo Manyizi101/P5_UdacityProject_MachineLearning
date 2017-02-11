@@ -108,6 +108,17 @@ print confusion_matrix(labels_test, pred)
 ##          unbalanced, resulting in a biased tree.
 ## Follow-up: Need to balance dataset before running decision tree.
 
+## Classifier 4: K-Nearest Neighbors (k = 3)
+## Result: Precision-recall of POI = 0.5, 0.4
+## Comment: Low precision and recall.
+##          k = 3 performs better than k = 1. Since more neighbors are
+##          considered for classification, the result is less biased.
+##          KNN is known to be computationally expensive. However, since Enron
+##          dataset is not that large, speed is not a problem.
+## Follow-up: KNN is also known to be a lazy learner because it does not learn
+##            from training dataset. It might not generalize well for other
+##            testing sets. Cross validation is needed to evaluate KNN better.
+
 from sklearn.metrics import classification_report
 print classification_report(labels_test, pred)
 
