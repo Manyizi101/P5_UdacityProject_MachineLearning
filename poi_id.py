@@ -79,11 +79,11 @@ features_train, features_test, labels_train, labels_test = \
 # pred = clf.predict(features_test)
 
 ## Classifier 6: Random forest
-from sklearn.ensemble import RandomForestClassifier
-clf = RandomForestClassifier(n_estimators=100, min_samples_split=5, \
-                                random_state=42)
-clf = clf.fit(features_train, labels_train)
-pred = clf.predict(features_test)
+# from sklearn.ensemble import RandomForestClassifier
+# clf = RandomForestClassifier(n_estimators=100, min_samples_split=5, \
+#                                 random_state=42)
+# clf = clf.fit(features_train, labels_train)
+# pred = clf.predict(features_test)
 
 ## Compute accuracy score of classifier
 ## Result: Naive Bayes = 0.88
@@ -139,6 +139,12 @@ print confusion_matrix(labels_test, pred)
 ## Comment: Low precision, very low recall. Low recall might be because
 ##          decision tree is unable to classify unbalanced data well
 ## Follow-up: Need to balance dataset before running adaboost
+
+## Classifier 6: Random forest (min_samples_split = 5, n_estimators = 100)
+## Result: Precision_recall of POI = 1.0, 0.2
+## Comment: High precision, very low recall. Low recall might be because
+##          decision tree is unable to classify unbalanced data well.
+## Follow-up: Need to balance dataset before running random forest
 
 from sklearn.metrics import classification_report
 print classification_report(labels_test, pred)
