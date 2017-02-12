@@ -2,8 +2,10 @@
 
 import sys
 import pickle
+import numpy as np
 sys.path.append("../tools/")
 
+from time import time
 from feature_format import featureFormat, targetFeatureSplit
 from tester import dump_classifier_and_data
 
@@ -22,11 +24,12 @@ features_list = ['poi','bonus', 'deferral_payments', 'deferred_income',\
 with open("final_project_dataset.pkl", "r") as data_file:
     data_dict = pickle.load(data_file)
 
+###############################################################################
 ### Task 2: Remove outliers
 ### Remove TOTAL row from dataset
 data_dict.pop('TOTAL')
 
-
+###############################################################################
 ### Task 3: Create new feature(s)
 ### Store to my_dataset for easy export below.
 my_dataset = data_dict
@@ -35,6 +38,7 @@ my_dataset = data_dict
 data = featureFormat(my_dataset, features_list, sort_keys = True)
 labels, features = targetFeatureSplit(data)
 
+###############################################################################
 ### Task 4: Try a varity of classifiers
 ### Please name your classifier clf for easy export below.
 ### Note that if you want to do PCA or other multi-stage operations,
@@ -46,11 +50,27 @@ from sklearn.cross_validation import train_test_split
 features_train, features_test, labels_train, labels_test = \
     train_test_split(features, labels, test_size=0.3, random_state=42)
 
+# Compute a PCA on the dataset
+from sklearn.decomposition import PCA
+
+n_components = 5
+
+print "Extracting the top %d eigenvalues from %d features" % (n_components, len(features_train))
+t0 = time()
+pca = PCA(n_components = n_components, whiten = True).fit(features_train)
+print "done in %0.3fs" % (time() - t0)
+
+print "Projecting the input data on the eigenvalue orthonormal basis"
+t0 = time()
+features_train_pca = pca.transform(features_train)
+features_test_pca = pca.transform(features_test)
+print "done in %0.3fs" % (time() - t0)
+
 ## Classifier 1: Naive Bayes
-# from sklearn.naive_bayes import GaussianNB
-# clf = GaussianNB()
-# clf = clf.fit(features_train, labels_train)
-# pred = clf.predict(features_test)
+from sklearn.naive_bayes import GaussianNB
+clf = GaussianNB()
+clf = clf.fit(features_train_pca, labels_train)
+pred = clf.predict(features_test_pca)
 
 ## Classifier 2: Support Vector Machine (assume balanced data)
 # from sklearn.svm import SVC
@@ -149,6 +169,7 @@ print confusion_matrix(labels_test, pred)
 from sklearn.metrics import classification_report
 print classification_report(labels_test, pred)
 
+###############################################################################
 ### Task 5: Tune your classifier to achieve better than .3 precision and recall
 ### using our testing script. Check the tester.py script in the final project
 ### folder for details on the evaluation method, especially the test_classifier
@@ -158,7 +179,7 @@ print classification_report(labels_test, pred)
 
 
 
-
+###############################################################################
 ### Task 6: Dump your classifier, dataset, and features_list so anyone can
 ### check your results. You do not need to change anything below, but make sure
 ### that the version of poi_id.py that you submit can be run on its own and
