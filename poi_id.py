@@ -71,10 +71,17 @@ features_train, features_test, labels_train, labels_test = \
 # pred = clf.predict(features_test)
 
 ## Classifier 5: AdaBoost
-from sklearn.ensemble import AdaBoostClassifier
-from sklearn.tree import DecisionTreeClassifier
-clf = AdaBoostClassifier(DecisionTreeClassifier(min_samples_split=10), \
-                            n_estimators = 200, random_state=42)
+# from sklearn.ensemble import AdaBoostClassifier
+# from sklearn.tree import DecisionTreeClassifier
+# clf = AdaBoostClassifier(DecisionTreeClassifier(min_samples_split=10), \
+#                            n_estimators = 200, random_state=42)
+# clf = clf.fit(features_train, labels_train)
+# pred = clf.predict(features_test)
+
+## Classifier 6: Random forest
+from sklearn.ensemble import RandomForestClassifier
+clf = RandomForestClassifier(n_estimators=100, min_samples_split=5, \
+                                random_state=42)
 clf = clf.fit(features_train, labels_train)
 pred = clf.predict(features_test)
 
