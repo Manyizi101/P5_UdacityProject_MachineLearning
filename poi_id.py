@@ -126,6 +126,9 @@ print confusion_matrix(labels_test, pred)
 ##          that all features are independent of each other.
 ## Follow-up: Conduct PCA before running Naive Bayes to ensure features are
 ##            independent of each other
+## PCA Result: Precision-recall of POI = 0.6, 0.6 (n_components = 5) or
+##                                       0.67, 0.4 (n_components = 3)
+## Comment: As expected, Naive Bayes performs better after PCA
 
 ## Classifier 2: Support Vector Machine (assume balanced data)
 ## Result: Precision-recall of POI = 0, 0
