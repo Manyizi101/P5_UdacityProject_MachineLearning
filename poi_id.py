@@ -127,6 +127,12 @@ print confusion_matrix(labels_test, pred)
 ##            from training dataset. It might not generalize well for other
 ##            testing sets. Cross validation is needed to evaluate KNN better.
 
+## Classifier 5: Adaboost (decision tree, min_samples_split = 10, n_estimators = 200)
+## Result: Precision-recall of POI = 0.5, 0.2
+## Comment: Low precision, very low recall. Low recall might be because
+##          decision tree is unable to classify unbalanced data well
+## Follow-up: Need to balance dataset before running adaboost
+
 from sklearn.metrics import classification_report
 print classification_report(labels_test, pred)
 
