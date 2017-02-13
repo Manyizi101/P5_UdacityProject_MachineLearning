@@ -120,6 +120,9 @@ print "done in %0.3fs" % (time() - t0)
 #print confusion_matrix(labels_test, pred)
 
 ## Generate classification report
+#from sklearn.metrics import classification_report
+#print classification_report(labels_test, pred)
+
 ## Classifier 1: Naive Bayes
 ## Result: Precision-recall of POI = 0.5, 0.4
 ## Comment: Low precision and recall. Naive Bayes has a strong assumption
@@ -169,8 +172,6 @@ print "done in %0.3fs" % (time() - t0)
 ##          decision tree is unable to classify unbalanced data well.
 ## Follow-up: Need to balance dataset before running random forest
 
-#from sklearn.metrics import classification_report
-#print classification_report(labels_test, pred)
 
 ###############################################################################
 ### Task 5: Tune your classifier to achieve better than .3 precision and recall
@@ -181,6 +182,7 @@ print "done in %0.3fs" % (time() - t0)
 ### http://scikit-learn.org/stable/modules/generated/sklearn.cross_validation.StratifiedShuffleSplit.html
 
 from tester import test_classifier
+print "Tester Classification Report"
 test_classifier(clf, my_dataset, features_list, folds = 1000)
 
 ###############################################################################
