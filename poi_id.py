@@ -38,6 +38,20 @@ my_dataset = data_dict
 data = featureFormat(my_dataset, features_list, sort_keys = True)
 labels, features = targetFeatureSplit(data)
 
+# Split dataset to training set and testing set
+from sklearn.cross_validation import train_test_split
+features_train, features_test, labels_train, labels_test = \
+    train_test_split(features, labels, test_size=0.3, random_state=42)
+
+### Feature Selection
+from sklearn.feature_selection import SelectKBest, f_classif
+skb = SelectKBest(f_classif, k = 5)
+skb.fit(features_train, labels_train)
+
+features_selected = [features_list[i+1] for i in skb.get_support(indices = True)]
+print 'The features selected by Select K Best are: '
+print features_selected
+
 ###############################################################################
 ### Task 4: Try a varity of classifiers
 ### Please name your classifier clf for easy export below.
@@ -45,26 +59,26 @@ labels, features = targetFeatureSplit(data)
 ### you'll need to use Pipelines. For more info:
 ### http://scikit-learn.org/stable/modules/pipeline.html
 
-# Split dataset to training set and testing set
-from sklearn.cross_validation import train_test_split
-features_train, features_test, labels_train, labels_test = \
-    train_test_split(features, labels, test_size=0.3, random_state=42)
+## Pipeline
+#from sklearn.pipeline import Pipeline
+#from sklearn.decomposition import PCA
 
-# Compute a PCA on the dataset
-from sklearn.decomposition import PCA
 
-n_components = 5
 
-print "Extracting the top %d eigenvalues from %d features" % (n_components, len(features_train))
-t0 = time()
-pca = PCA(n_components = n_components, whiten = True).fit(features_train)
-print "done in %0.3fs" % (time() - t0)
 
-print "Projecting the input data on the eigenvalue orthonormal basis"
-t0 = time()
-features_train_pca = pca.transform(features_train)
-features_test_pca = pca.transform(features_test)
-print "done in %0.3fs" % (time() - t0)
+## PCA
+# n_components = 5
+
+# print "Extracting the top %d eigenvalues from %d features" % (n_components, len(features_train))
+# t0 = time()
+# pca = PCA(n_components = n_components, whiten = True).fit(features_train)
+# print "done in %0.3fs" % (time() - t0)
+
+# print "Projecting the input data on the eigenvalue orthonormal basis"
+# t0 = time()
+# features_train_pca = pca.transform(features_train)
+# features_test_pca = pca.transform(features_test)
+# print "done in %0.3fs" % (time() - t0)
 
 ## Classifier 1: Naive Bayes
 #from sklearn.naive_bayes import GaussianNB
