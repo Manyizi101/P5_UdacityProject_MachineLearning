@@ -123,16 +123,17 @@ clf = GaussianNB()
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.decomposition import PCA
-from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import GridSearchCV, StratifiedShuffleSplit
 
 min_max_scaler = MinMaxScaler()
 pca = PCA()
 pipeline = Pipeline(steps = [('scaler', min_max_scaler), ('pca', pca), ('classifier', clf)])
 print pipeline.get_params().keys()
 
-param_pca = {'pca__n_components': [3,5,9,10]}
+param_pca = {'pca__n_components': [3,5,7,9,10]}
+cv = StratifiedShuffleSplit(n_splits = 100, test_size = 0.3, random_state=42)
 
-gs = GridSearchCV(pipeline, param_grid = param_pca, scoring = 'f1')
+gs = GridSearchCV(pipeline, param_grid = param_pca, cv=cv, scoring = 'f1')
 gs.fit(features, labels)
 clf = gs.best_estimator_
 
