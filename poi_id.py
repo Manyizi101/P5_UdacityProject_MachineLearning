@@ -52,6 +52,10 @@ features_selected = [features_list[i+1] for i in skb.get_support(indices = True)
 print 'The features selected by Select K Best are: '
 print features_selected
 
+# Features selected are: 'bonus', 'exercised_stock_options', 'salary',
+#                        'shared_receipt_with_poi', 'total_stock_value'
+# The same features were suggested by our exploratory data analysis
+
 ###############################################################################
 ### Task 4: Try a varity of classifiers
 ### Please name your classifier clf for easy export below.
