@@ -67,10 +67,10 @@ features_test_pca = pca.transform(features_test)
 print "done in %0.3fs" % (time() - t0)
 
 ## Classifier 1: Naive Bayes
-from sklearn.naive_bayes import GaussianNB
-clf = GaussianNB()
-clf = clf.fit(features_train_pca, labels_train)
-pred = clf.predict(features_test_pca)
+#from sklearn.naive_bayes import GaussianNB
+#clf = GaussianNB()
+# clf = clf.fit(features_train_pca, labels_train)
+# pred = clf.predict(features_test_pca)
 
 ## Classifier 2: Support Vector Machine (assume balanced data)
 # from sklearn.svm import SVC
@@ -94,7 +94,7 @@ pred = clf.predict(features_test_pca)
 # from sklearn.ensemble import AdaBoostClassifier
 # from sklearn.tree import DecisionTreeClassifier
 # clf = AdaBoostClassifier(DecisionTreeClassifier(min_samples_split=10), \
-#                            n_estimators = 200, random_state=42)
+#                           n_estimators = 200, random_state=42)
 # clf = clf.fit(features_train, labels_train)
 # pred = clf.predict(features_test)
 
@@ -116,8 +116,8 @@ pred = clf.predict(features_test_pca)
 # print "Classifier 1 (Naive Bayes) Accuracy: ", acc
 
 ## Generate confusion matrix
-from sklearn.metrics import confusion_matrix
-print confusion_matrix(labels_test, pred)
+#from sklearn.metrics import confusion_matrix
+#print confusion_matrix(labels_test, pred)
 
 ## Generate classification report
 ## Classifier 1: Naive Bayes
@@ -169,8 +169,8 @@ print confusion_matrix(labels_test, pred)
 ##          decision tree is unable to classify unbalanced data well.
 ## Follow-up: Need to balance dataset before running random forest
 
-from sklearn.metrics import classification_report
-print classification_report(labels_test, pred)
+#from sklearn.metrics import classification_report
+#print classification_report(labels_test, pred)
 
 ###############################################################################
 ### Task 5: Tune your classifier to achieve better than .3 precision and recall
@@ -180,7 +180,8 @@ print classification_report(labels_test, pred)
 ### stratified shuffle split cross validation. For more info:
 ### http://scikit-learn.org/stable/modules/generated/sklearn.cross_validation.StratifiedShuffleSplit.html
 
-
+from tester import test_classifier
+test_classifier(clf, my_dataset, features_list, folds = 1000)
 
 ###############################################################################
 ### Task 6: Dump your classifier, dataset, and features_list so anyone can
