@@ -113,41 +113,29 @@ print features_selected
 ## Classifier 1: Naive Bayes
 from sklearn.naive_bayes import GaussianNB
 clf = GaussianNB()
-# clf = clf.fit(features_train_pca, labels_train)
-# pred = clf.predict(features_test_pca)
 
 ## Classifier 2: Support Vector Machine (assume balanced data)
 # from sklearn.svm import SVC
 # clf = SVC(C = 1000, kernel = 'sigmoid', gamma = 0.1)
-# clf = clf.fit(features_train, labels_train)
-# pred = clf.predict(features_test)
 
 ## Classifier 3: Decision Tree
 #from sklearn import tree
-#clf = tree.DecisionTreeClassifier()
-# clf = clf.fit(features_train, labels_train)
-# pred = clf.predict(features_test)
+#clf = tree.DecisionTreeClassifier(random_state=42)
 
 ## Classifier 4: K-Nearest Neighbours
 #from sklearn import neighbors
 #clf = neighbors.KNeighborsClassifier(weights = 'distance')
-# clf.fit(features_train, labels_train)
-# pred = clf.predict(features_test)
 
 ## Classifier 5: AdaBoost
 #from sklearn.ensemble import AdaBoostClassifier
 #from sklearn.tree import DecisionTreeClassifier
 #clf = AdaBoostClassifier(DecisionTreeClassifier(min_samples_split=10), \
 #                          random_state=42)
-# clf = clf.fit(features_train, labels_train)
-# pred = clf.predict(features_test)
 
 ## Classifier 6: Random forest
 #from sklearn.ensemble import RandomForestClassifier
 #clf = RandomForestClassifier(n_estimators=100, min_samples_split=5, \
 #                                random_state=42)
-# clf = clf.fit(features_train, labels_train)
-# pred = clf.predict(features_test)
 
 ## Pipeline
 from sklearn.pipeline import Pipeline
@@ -156,14 +144,16 @@ from sklearn.decomposition import PCA
 from sklearn.model_selection import GridSearchCV, StratifiedShuffleSplit
 
 min_max_scaler = MinMaxScaler()
-pca = PCA()
-pipeline = Pipeline(steps = [('scaler', min_max_scaler), ('pca', pca), ('classifier', clf)])
+pca = PCA(whiten=True)
+skb = SelectKBest(f_classif)
+pipeline = Pipeline(steps = [('scaler', min_max_scaler), ('pca', pca), ('skb', skb), ('clf', clf)])
 print pipeline.get_params().keys()
 
-param_pca = {'pca__n_components': [3,5,7,9,10]}
+param = {'pca__n_components': [15],
+         'skb__k': [3,5,7]}
 cv = StratifiedShuffleSplit(n_splits = 100, test_size = 0.3, random_state=42)
 
-gs = GridSearchCV(pipeline, param_grid = param_pca, cv=cv, scoring = 'f1')
+gs = GridSearchCV(pipeline, param_grid = param, cv=cv, scoring = 'f1')
 gs.fit(features, labels)
 clf = gs.best_estimator_
 
