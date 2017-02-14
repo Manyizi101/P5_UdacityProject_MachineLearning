@@ -77,10 +77,11 @@ from sklearn.feature_selection import SelectKBest, f_classif
 skb = SelectKBest(f_classif, k = 5)
 skb.fit(features_train, labels_train)
 
+# Print out features selected by Select K Best algorithm
 features_selected = [features_list[i+1] for i in skb.get_support(indices = True)]
 print 'The features selected by Select K Best are: '
-print features_selected
 
+# Add 'poi' as the first feature
 features_selected.insert(0, 'poi')
 print features_selected
 
