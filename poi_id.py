@@ -75,7 +75,7 @@ features_train, features_test, labels_train, labels_test = \
 ### Feature Selection
 from sklearn.feature_selection import SelectKBest, f_classif
 skb = SelectKBest(f_classif, k = 5)
-skb.fit(features_train, labels_train)
+skb.fit(features, labels)
 
 # Print out features selected by Select K Best algorithm
 features_selected = [features_list[i+1] for i in skb.get_support(indices = True)]
@@ -140,22 +140,33 @@ clf = GaussianNB()
 ## Pipeline
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import MinMaxScaler
-from sklearn.decomposition import PCA
 from sklearn.model_selection import GridSearchCV, StratifiedShuffleSplit
 
 min_max_scaler = MinMaxScaler()
-pca = PCA(whiten=True)
 skb = SelectKBest(f_classif)
-pipeline = Pipeline(steps = [('scaler', min_max_scaler), ('pca', pca), ('skb', skb), ('clf', clf)])
-print pipeline.get_params().keys()
+pipeline = Pipeline(steps = [('scaler', min_max_scaler), ('skb', skb), ('clf', clf)])
 
-param = {'pca__n_components': [15],
-         'skb__k': [3,5,7]}
+param = {'skb__k': [3,5,7]}
 cv = StratifiedShuffleSplit(n_splits = 100, test_size = 0.3, random_state=42)
 
 gs = GridSearchCV(pipeline, param_grid = param, cv=cv, scoring = 'f1')
 gs.fit(features, labels)
 clf = gs.best_estimator_
+
+selector = clf.named_steps['skb']
+
+### Getting feature scores
+# Make a copy of features_list and remove poi from the list
+from copy import deepcopy
+features_list_new = deepcopy(features_list)
+features_list_new.remove('poi')
+
+# Make a list of feature-score pairs and sort it in descending order
+feature_scores = []
+for f, v in zip(features_list_new, selector.scores_.tolist()):
+    feature_scores.append([float(v), f])
+feature_scores = sorted(feature_scores, reverse=True)
+print feature_scores
 
 ###############################################################################
 
