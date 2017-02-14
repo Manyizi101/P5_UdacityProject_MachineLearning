@@ -48,15 +48,21 @@ df.set_index(employees, inplace=True)
 df.replace(to_replace='NaN', value=0, inplace=True)
 
 # Add new feature
-df['ratio_email_sent_to_poi'] = (df['from_this_person_to_poi'])/(df['from_messages'])
+df['ratio_email_sent_to_poi'] = df['from_this_person_to_poi']/df['from_messages']
+df['ratio_email_from_poi'] = df['from_poi_to_this_person']/df['to_messages']
 df.replace(to_replace='NaN', value=0, inplace=True)
 
+# Create a new list of features
 new_features_list = df.columns.values
 print new_features_list
 
+# Convert data frame back to dictionary
+my_dataset = df.to_dict('index')
+
+
 ###############################################################################
 ### Extract features and labels from dataset for local testing
-data = featureFormat(my_dataset, features_list, sort_keys = True)
+data = featureFormat(my_dataset, new_features_list, sort_keys = True)
 labels, features = targetFeatureSplit(data)
 
 # Split dataset to training set and testing set
@@ -67,7 +73,7 @@ features_train, features_test, labels_train, labels_test = \
 ###############################################################################
 ### Feature Selection
 from sklearn.feature_selection import SelectKBest, f_classif
-skb = SelectKBest(f_classif, k = 5)
+skb = SelectKBest(f_classif, k = 'all')
 skb.fit(features_train, labels_train)
 
 features_selected = [features_list[i+1] for i in skb.get_support(indices = True)]
