@@ -29,6 +29,9 @@ with open("final_project_dataset.pkl", "r") as data_file:
 ### Remove TOTAL row from dataset
 data_dict.pop('TOTAL')
 
+### Remove THE TRAVEL AGENCY IN THE PARK row from dataset
+data_dict.pop('THE TRAVEL AGENCY IN THE PARK')
+
 ###############################################################################
 ### Task 3: Create new feature(s)
 ### Store to my_dataset for easy export below.
@@ -93,29 +96,29 @@ clf = GaussianNB()
 # pred = clf.predict(features_test)
 
 ## Classifier 3: Decision Tree
-# from sklearn import tree
-# clf = tree.DecisionTreeClassifier(min_samples_split = 15)
+#from sklearn import tree
+#clf = tree.DecisionTreeClassifier()
 # clf = clf.fit(features_train, labels_train)
 # pred = clf.predict(features_test)
 
 ## Classifier 4: K-Nearest Neighbours
-# from sklearn import neighbors
-# clf = neighbors.KNeighborsClassifier(n_neighbors = 3, weights = 'distance')
+#from sklearn import neighbors
+#clf = neighbors.KNeighborsClassifier(weights = 'distance')
 # clf.fit(features_train, labels_train)
 # pred = clf.predict(features_test)
 
 ## Classifier 5: AdaBoost
-# from sklearn.ensemble import AdaBoostClassifier
-# from sklearn.tree import DecisionTreeClassifier
-# clf = AdaBoostClassifier(DecisionTreeClassifier(min_samples_split=10), \
-#                           n_estimators = 200, random_state=42)
+#from sklearn.ensemble import AdaBoostClassifier
+#from sklearn.tree import DecisionTreeClassifier
+#clf = AdaBoostClassifier(DecisionTreeClassifier(min_samples_split=10), \
+#                          random_state=42)
 # clf = clf.fit(features_train, labels_train)
 # pred = clf.predict(features_test)
 
 ## Classifier 6: Random forest
-# from sklearn.ensemble import RandomForestClassifier
-# clf = RandomForestClassifier(n_estimators=100, min_samples_split=5, \
-#                                 random_state=42)
+#from sklearn.ensemble import RandomForestClassifier
+#clf = RandomForestClassifier(n_estimators=100, min_samples_split=5, \
+#                                random_state=42)
 # clf = clf.fit(features_train, labels_train)
 # pred = clf.predict(features_test)
 
@@ -193,6 +196,7 @@ clf = gs.best_estimator_
 ## Follow-up: KNN is also known to be a lazy learner because it does not learn
 ##            from training dataset. It might not generalize well for other
 ##            testing sets. Cross validation is needed to evaluate KNN better.
+## GridSearch result: KNN performs very poorly upon cross validation
 
 ## Classifier 5: Adaboost (decision tree, min_samples_split = 10, n_estimators = 200)
 ## Result: Precision-recall of POI = 0.5, 0.2
