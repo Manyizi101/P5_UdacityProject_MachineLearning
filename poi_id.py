@@ -10,23 +10,13 @@ from time import time
 from feature_format import featureFormat, targetFeatureSplit
 from tester import dump_classifier_and_data
 
-### Task 1: Select what features you'll use.
-### features_list is a list of strings, each of which is a feature name.
-### The first feature must be "poi".
-### Attempt 1: Using all features
-features_list = ['poi','bonus', 'deferral_payments', 'deferred_income',\
-    'director_fees', 'exercised_stock_options', 'expenses', 'from_messages',
-    'from_poi_to_this_person', 'from_this_person_to_poi', 'loan_advances',
-    'long_term_incentive', 'other', 'restricted_stock',
-    'restricted_stock_deferred', 'salary', 'shared_receipt_with_poi',
-    'to_messages', 'total_payments', 'total_stock_value']
 
 ### Load the dictionary containing the dataset
 with open("final_project_dataset.pkl", "r") as data_file:
     data_dict = pickle.load(data_file)
 
 ###############################################################################
-### Task 2: Remove outliers
+### Step 1: Remove outliers (based on a separate data exploration)
 ### Remove TOTAL row from dataset
 data_dict.pop('TOTAL')
 
@@ -34,7 +24,7 @@ data_dict.pop('TOTAL')
 data_dict.pop('THE TRAVEL AGENCY IN THE PARK')
 
 ###############################################################################
-### Task 3: Create new feature(s)
+### Step 2: Create new feature(s)
 ### Store to my_dataset for easy export below.
 my_dataset = data_dict
 
@@ -53,16 +43,27 @@ df['ratio_email_from_poi'] = df['from_poi_to_this_person']/df['to_messages']
 df.replace(to_replace='NaN', value=0, inplace=True)
 
 # Create a new list of features
-new_features_list = df.columns.values
-print new_features_list
+new_features_full = df.columns.values
 
 # Convert data frame back to dictionary
 my_dataset = df.to_dict('index')
 
+###############################################################################
+### Step 3: Select what features you'll use.
+### features_list is a list of strings, each of which is a feature name.
+### The first feature must be "poi".
+### Attempt 1: Using all features
+features_list = ['poi','bonus', 'deferral_payments', 'deferred_income',\
+    'director_fees', 'exercised_stock_options', 'expenses', 'from_messages',
+    'from_poi_to_this_person', 'from_this_person_to_poi', 'loan_advances',
+    'long_term_incentive', 'other', 'restricted_stock',
+    'restricted_stock_deferred', 'salary', 'shared_receipt_with_poi',
+    'to_messages', 'total_payments', 'total_stock_value',
+    'ratio_email_sent_to_poi', 'ratio_email_from_poi']
 
 ###############################################################################
 ### Extract features and labels from dataset for local testing
-data = featureFormat(my_dataset, new_features_list, sort_keys = True)
+data = featureFormat(my_dataset, features_list, sort_keys = True)
 labels, features = targetFeatureSplit(data)
 
 # Split dataset to training set and testing set
@@ -73,7 +74,7 @@ features_train, features_test, labels_train, labels_test = \
 ###############################################################################
 ### Feature Selection
 from sklearn.feature_selection import SelectKBest, f_classif
-skb = SelectKBest(f_classif, k = 'all')
+skb = SelectKBest(f_classif, k = 5)
 skb.fit(features_train, labels_train)
 
 features_selected = [features_list[i+1] for i in skb.get_support(indices = True)]
