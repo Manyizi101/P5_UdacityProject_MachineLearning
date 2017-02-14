@@ -3,6 +3,7 @@
 import sys
 import pickle
 import numpy as np
+import pandas
 sys.path.append("../tools/")
 
 from time import time
@@ -37,6 +38,23 @@ data_dict.pop('THE TRAVEL AGENCY IN THE PARK')
 ### Store to my_dataset for easy export below.
 my_dataset = data_dict
 
+## Converting dictionary to pandas data frame
+df = pandas.DataFrame.from_records(list(data_dict.values()))
+employees = pandas.Series(list(data_dict.keys()))
+
+# Set the index of df to be the employees series
+df.set_index(employees, inplace=True)
+
+df.replace(to_replace='NaN', value=0, inplace=True)
+
+# Add new feature
+df['ratio_email_sent_to_poi'] = (df['from_this_person_to_poi'])/(df['from_messages'])
+df.replace(to_replace='NaN', value=0, inplace=True)
+
+new_features_list = df.columns.values
+print new_features_list
+
+###############################################################################
 ### Extract features and labels from dataset for local testing
 data = featureFormat(my_dataset, features_list, sort_keys = True)
 labels, features = targetFeatureSplit(data)
@@ -46,6 +64,7 @@ from sklearn.cross_validation import train_test_split
 features_train, features_test, labels_train, labels_test = \
     train_test_split(features, labels, test_size=0.3, random_state=42)
 
+###############################################################################
 ### Feature Selection
 from sklearn.feature_selection import SelectKBest, f_classif
 skb = SelectKBest(f_classif, k = 5)
