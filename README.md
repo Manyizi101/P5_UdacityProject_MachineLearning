@@ -10,9 +10,10 @@ Here are the links, in case you are interested:
 * Data Analyst Nanodegree program: https://www.udacity.com/course/data-analyst-nanodegree--nd002
 
 ## What can you find in this repo?
-1. poi_id.py:
-2. P5_writeup:
-3. Enron_EDA.ipynb:
+1. poi_id.py: Python script for machine learning classifiers
+2. Enron_EDA.ipynb: Initial exploratory data analysis of Enron dataset
+3. Enron_Submission_Free_Response_Questions.pdf: Answers to Udacity's free-response questions
+4. Sources.txt: Websites, blogs, and forums that I referred to while doing this project
 
 ## Licence
 MIT License
