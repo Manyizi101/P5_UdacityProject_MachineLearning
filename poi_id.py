@@ -86,8 +86,7 @@ features_selected.insert(0, 'poi')
 print features_selected
 
 # Features selected are: 'bonus', 'exercised_stock_options', 'salary',
-#                        'shared_receipt_with_poi', 'total_stock_value'
-# The same features were suggested by our exploratory data analysis
+#                        'total_stock_value', 'ratio_email_sent_to_poi'
 
 ###############################################################################
 ### Task 4: Try a varity of classifiers
@@ -120,18 +119,18 @@ clf = GaussianNB()
 
 ## Classifier 3: Decision Tree
 #from sklearn import tree
-#clf = tree.DecisionTreeClassifier(random_state=42)
+#clf = tree.DecisionTreeClassifier(min_samples_split=5, random_state=42)
 
 ## Classifier 4: K-Nearest Neighbours
 #from sklearn import neighbors
-#clf = neighbors.KNeighborsClassifier(weights = 'distance')
+#clf = neighbors.KNeighborsClassifier(n_neighbors=3, weights = 'distance')
 
 ## Classifier 5: AdaBoost
 #from sklearn.ensemble import AdaBoostClassifier
 #from sklearn.tree import DecisionTreeClassifier
 #clf = AdaBoostClassifier(DecisionTreeClassifier(min_samples_split=10), \
 #                          random_state=42)
-
+w
 ## Classifier 6: Random forest
 #from sklearn.ensemble import RandomForestClassifier
 #clf = RandomForestClassifier(n_estimators=100, min_samples_split=5, \
